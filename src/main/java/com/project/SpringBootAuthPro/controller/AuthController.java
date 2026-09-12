@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import com.project.SpringBootAuthPro.entity.user;
 import com.project.SpringBootAuthPro.exception.UserNotFoundException;
@@ -78,7 +80,7 @@ public class AuthController {
     //Showing List of active users in the DataBase by username
     // Example request: GET /auth/userList/Alien
     @GetMapping("/userList/{username}")
-    public ResponseEntity<user> getUserByUsername(@Valid @RequestBody String username) {
+    public ResponseEntity<user> getUserByUsername(@Valid @PathVariable String username) {
         Optional<user> userOptional = UserRepository.findByUsername(username);
         if (userOptional.isPresent()) {
             return ResponseEntity.ok(userOptional.get());
