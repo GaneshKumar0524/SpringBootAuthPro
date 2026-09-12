@@ -75,6 +75,18 @@ public class AuthController {
 		return ResponseEntity.ok(list);
 	}
 
+    //Showing List of active users in the DataBase by username
+    // Example request: GET /auth/userList/Alien
+    @GetMapping("/userList/{username}")
+    public ResponseEntity<user> getUserByUsername(@Valid @RequestBody String username) {
+        Optional<user> userOptional = UserRepository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(userOptional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 	@PostMapping("/login")
 	public ResponseEntity<Map<String,String>> login(@RequestBody user authRequest) {
 		try {
