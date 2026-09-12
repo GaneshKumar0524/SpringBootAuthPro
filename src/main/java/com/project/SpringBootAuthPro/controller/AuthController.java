@@ -136,31 +136,31 @@ public class AuthController {
 	//"username": "Alien",
 	//"password": "Ganesh@123"
 	//}
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
-
-        String email = request.get("email");
-
-        Optional<user> existingUser = UserRepository.findByEmail(email);
-
-        if (existingUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found!");
-        }
-
-        String token = java.util.UUID.randomUUID().toString();
-
-        PasswordResetToken resetToken = new PasswordResetToken();
-        resetToken.setEmail(email);
-        resetToken.setToken(token);
-        resetToken.setExpiryDate(new Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 mins
-
-        passwordResetTokenRepo.save(resetToken);
-
-        String link = "http://localhost:9090/auth/reset-password?token=" + token;
-
-        emailService.sendEmail(email, "Reset Password", "Click here to reset password:\n" + link);
-
-        return ResponseEntity.ok("Reset password link sent to email!");
-    }
+//    @PostMapping("/forgot-password")
+//    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
+//
+//        String email = request.get("email");
+//
+//        Optional<user> existingUser = UserRepository.findByEmail(email);
+//
+//        if (existingUser == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found!");
+//        }
+//
+//        String token = java.util.UUID.randomUUID().toString();
+//
+//        PasswordResetToken resetToken = new PasswordResetToken();
+//        resetToken.setEmail(email);
+//        resetToken.setToken(token);
+//        resetToken.setExpiryDate(new Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 mins
+//
+//        passwordResetTokenRepo.save(resetToken);
+//
+//        String link = "http://localhost:9090/auth/reset-password?token=" + token;
+//
+//        emailService.sendEmail(email, "Reset Password", "Click here to reset password:\n" + link);
+//
+//        return ResponseEntity.ok("Reset password link sent to email!");
+//    }
 
 }
